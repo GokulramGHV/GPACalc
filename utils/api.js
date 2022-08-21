@@ -40,3 +40,7 @@ export const getCalcs = () => {
 export const getCalc = (ID) => {
   return request(`/${ID}/`, 'GET');
 };
+
+export const createCalc = (payload) => {
+  return request(`/`, 'POST', payload);
+};
