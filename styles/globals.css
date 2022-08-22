@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-blue {
+  @apply form-control
+          block
+          w-full
+          px-3
+          py-1.5
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border-2 border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          shadow-sm
+          focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:shadow-lg focus:shadow-blue-500/20 focus:ring-0 focus:outline-none;
+}
+
+* {
+  @apply transition duration-300 ease-in-out;
+}

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:4000/calcs/';
+const API_BASE_URL = 'https://gpacalc-backend.gokulramghv.repl.co/calcs/';
 
 export const request = async (endpoint, method = 'GET', data = {}) => {
   let url;
@@ -39,8 +39,4 @@ export const getCalcs = () => {
 
 export const getCalc = (ID) => {
   return request(`/${ID}/`, 'GET');
-};
-
-export const createCalc = (payload) => {
-  return request(`/`, 'POST', payload);
 };
