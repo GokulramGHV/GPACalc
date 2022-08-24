@@ -9,8 +9,9 @@ export default function LabelInput(props) {
         value={props.value}
         className="input-blue"
         placeholder={props.placeholder}
+        required
       />
-      <label for={props.id} class="text-gray-500 overflow-clip">
+      <label for={props.id} className="text-gray-500 overflow-clip">
         {props.labelText}
       </label>
     </div>

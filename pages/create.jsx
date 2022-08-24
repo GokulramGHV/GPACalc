@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
 import LabelInput from '../components/LabelInput';
 import { createCalc } from '../utils/api';
+import { TwitterPicker } from 'react-color';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import copy from 'copy-to-clipboard';
 
 export default function CreateCalc() {
   const [state, setState] = useState({ title: '', fields: [], createdBy: '' });
   const [calcURL, setCalcURL] = useState('');
+
+  const notify_success = (msg) => toast.success(msg);
+  const notify_error = (msg) => toast.error(msg);
 
   //   useEffect(() => {
   //     console.log(state);
@@ -24,19 +31,28 @@ export default function CreateCalc() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (state.fields.length === 0) {
+      toast.warn('Cannot create calc with no fields!');
+      return;
+    }
     try {
       const data = await createCalc(state);
       console.log(data);
-      setCalcURL(`${data.id}`);
+      setCalcURL(`${data._id}`);
+      notify_success('Calculator Created Successfully!');
     } catch (error) {
+      notify_error('Something went wrong!');
       console.log(error);
     }
   };
 
   return (
     <div className="py-10 px-2 min-h-screen flex justify-center items-center bg-slate-50">
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <div className="bg-white shadow-lg sm:w-[35rem] p-5 rounded-lg">
+          <h1 className="text-3xl font-bold text-gray-700">Calc Editor</h1>
+          <hr className="mb-3 mt-1 bg-gray-200" />
           <LabelInput
             className="mb-4"
             type="text"
@@ -67,7 +83,9 @@ export default function CreateCalc() {
             placeholder="Enter Creator's Name"
           />
 
-          <div className="my-5 w-full grid gap-3 bg-stone-100 rounded-lg p-3">
+          {/* <TwitterPicker /> */}
+
+          <div className="my-5 w-full grid gap-3 bg-gray-100 rounded-lg p-3">
             <div>
               <div className="text-lg font-semibold text-gray-600 flex gap-2 justify-center">
                 <h2>Subject Fields</h2>
@@ -78,7 +96,7 @@ export default function CreateCalc() {
                 )}
               </div>
               {state.fields.length === 0 && (
-                <p className="text-center">
+                <p className="text-center mx-5">
                   Add a new field by clicking 'Add Field'
                 </p>
               )}
@@ -146,7 +164,9 @@ export default function CreateCalc() {
           <div>
             <div className="flex gap-3">
               <div
-                className="cursor-pointer text-center bg-blue-500 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/70 p-4 rounded-lg text-white font-bold w-full hover:bg-blue-600"
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                className=" flex justify-center cursor-pointer text-center bg-blue-500 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/70 p-4 rounded-lg text-white font-bold w-full hover:bg-blue-600"
                 onClick={() => {
                   setState((state) => {
                     return {
@@ -159,14 +179,52 @@ export default function CreateCalc() {
                   });
                 }}
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  height={16}
+                  width={16}
+                  className="bi bi-plus-square-fill mr-2 mt-[3px]"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                </svg>
                 Add Field
               </div>
-              <div className="cursor-pointer text-center bg-red-500 shadow-lg shadow-red-500/30 hover:shadow-red-500/60 p-4 rounded-lg text-white font-bold w-full hover:bg-red-600">
+              <div
+                onClick={() => {
+                  setState((state) => {
+                    return {
+                      ...state,
+                      fields: [],
+                    };
+                  });
+                }}
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                className="flex justify-center cursor-pointer text-center bg-red-500 shadow-lg shadow-red-500/30 hover:shadow-red-500/60 p-4 rounded-lg text-white font-bold w-full hover:bg-red-600"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="bi bi-arrow-clockwise mr-2 mt-[3px] font-bold"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+                  />
+                  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                </svg>
                 Reset Fields
               </div>
             </div>
 
             <button
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="light"
               type="submit"
               className="bg-indigo-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/60 p-4 rounded-lg text-white font-bold w-full mt-3 hover:bg-indigo-600"
             >
@@ -186,6 +244,46 @@ export default function CreateCalc() {
               </div>
             </button>
           </div>
+          {calcURL !== '' && (
+            <div className="bg-gray-100 p-3 rounded-lg mt-4 font-mono shadow-sm">
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="font-mono font-semibold">Calc's Link:</h3>
+                  <div className="w-full break-all">
+                    <a
+                      href={`http://localhost:3000/${calcURL}`}
+                      className="hover:underline text-blue-500"
+                    >
+                      {`http://localhost:3000/${calcURL}`}
+                    </a>
+                  </div>
+                </div>
+
+                <div
+                  className="ml-2 flex justify-center items-center cursor-pointer rounded-lg px-3 py-2 bg-white shadow-sm hover:shadow-lg text-gray-700"
+                  onClick={() => {
+                    copy(`http://localhost:3000/${calcURL}`);
+                    toast.info('Link copied to clipboard!');
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 mt-1"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </form>
     </div>
