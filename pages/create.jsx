@@ -147,7 +147,7 @@ export default function CreateCalc() {
                 </div>
                 {state.fields.length === 0 && (
                   <p className="text-center mx-5">
-                    Add a new field by clicking 'Add Field'
+                    Add a new field by clicking &apos;Add Field&apos;
                   </p>
                 )}
               </div>
@@ -316,13 +316,15 @@ export default function CreateCalc() {
               <div className="bg-gray-100 p-3 rounded-lg mt-4 font-mono shadow-sm">
                 <div className="flex justify-between">
                   <div>
-                    <h3 className="font-mono font-semibold">Calc's Link:</h3>
+                    <h3 className="font-mono font-semibold">
+                      Calc&apos;s Link:
+                    </h3>
                     <div className="w-full break-all">
                       <a
-                        href={`http://localhost:3000/${calcURL}`}
+                        href={`https://gpacalc.vercel.app/${calcURL}`}
                         className="hover:underline text-blue-500"
                       >
-                        {`http://localhost:3000/${calcURL}`}
+                        {`https://gpacalc.vercel.app/${calcURL}`}
                       </a>
                     </div>
                   </div>
@@ -330,7 +332,7 @@ export default function CreateCalc() {
                   <div
                     className="ml-2 flex justify-center items-center cursor-pointer rounded-lg px-3 py-2 bg-white shadow-sm hover:shadow-lg text-gray-700"
                     onClick={() => {
-                      copy(`http://localhost:3000/${calcURL}`);
+                      copy(`https://gpacalc.vercel.app/${calcURL}`);
                       toast.info('Link copied to clipboard!');
                     }}
                   >

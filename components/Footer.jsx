@@ -7,6 +7,7 @@ export default function Footer({ className }) {
       <a
         href="https://github.com/GokulramGHV"
         target="_blank"
+        rel="noreferrer"
         className="italic text-blue-500"
       >
         @GokulramGHV
