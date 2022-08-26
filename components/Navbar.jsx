@@ -9,19 +9,21 @@ export default function Navbar({ fixed }) {
       }
     >
       <div className="mx-auto max-w-7xl flex justify-center sm:justify-between pt-10 px-10 flex-wrap gap-5">
-        <div className="flex gap-2 items-center">
-          <div className="drop-shadow-xl">
-            <Image src="/icon.svg" height={50} width={50} />
+        <Link href="/">
+          <div className="flex gap-2 items-center cursor-pointer">
+            <div className="drop-shadow-xl">
+              <Image src="/icon.svg" height={40} width={40} alt="logo" />
+            </div>
+            <div>
+              <h1
+                className="text-3xl text-gray-800 drop-shadow-lg mb-1"
+                style={{ fontFamily: 'Mochiy Pop One' }}
+              >
+                GPACalc
+              </h1>
+            </div>
           </div>
-          <div>
-            <h1
-              className="text-3xl text-gray-800 drop-shadow-lg mb-1"
-              style={{ fontFamily: 'Mochiy Pop One' }}
-            >
-              GPACalc
-            </h1>
-          </div>
-        </div>
+        </Link>
 
         <div className="flex gap-5 items-center">
           <Link href="/">

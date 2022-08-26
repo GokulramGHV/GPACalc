@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import Footer from '../components/Footer';
 import { getCalc } from '../utils/api';
 
 const grades = [
@@ -23,7 +24,7 @@ export default function RenderCalc({ data }) {
       initState.push({
         subName: field.subName,
         credits: field.credits,
-        value: -1,
+        value: '',
       });
     });
     return initState;
@@ -33,7 +34,7 @@ export default function RenderCalc({ data }) {
   useEffect(() => {
     document.documentElement.style.setProperty('--a-color', data.color);
     document.documentElement.style.setProperty('--bg-color', data.bgColor);
-  }, []);
+  }, [data.color, data.bgColor]);
 
   const calcgpa = () => {
     let gpa = 0;
@@ -43,13 +44,18 @@ export default function RenderCalc({ data }) {
       gpa += f?.credits * f?.value;
     });
     return (
-      <div>{Math.round((gpa / totalCreds + Number.EPSILON) * 1000) / 1000}</div>
+      <div>{Math.round((gpa / totalCreds + Number.EPSILON) * 100) / 100}</div>
     );
   };
 
   useEffect(() => {
     console.log(state);
   }, [state]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setShowGPA(true);
+  };
 
   if (data === 'Error') {
     return (
@@ -65,20 +71,15 @@ export default function RenderCalc({ data }) {
   return (
     <>
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet"
-        />
         <title>{data.title}</title>
       </Head>
       {showGPA ? (
         <div className="h-screen flex flex-col justify-center items-center w-full">
           <h2 className="text-3xl font-medium">Your GPA is</h2>{' '}
-          <h1 className="text-8xl font-bold">{calcgpa()}</h1>
+          <h1 className="text-[7rem] font-bold">{calcgpa()}</h1>
           <button
-            className="text-white font-bold bg-gray-700 rounded-lg px-4 py-3 mt-5"
+            className="text-white font-bold  shadow-lg rounded-lg px-6 py-3 mt-5 hover:opacity-75"
+            style={{ background: data.color }}
             onClick={() => {
               setShowGPA(false);
             }}
@@ -97,25 +98,33 @@ export default function RenderCalc({ data }) {
               <span className="font-medium">Template By:</span> {data.createdBy}
             </h2>
             <hr className="mb-3 mt-2 bg-gray-300" />
-            <div className="grid gap-4">
-              {data.fields.map((field, i) => {
-                return (
-                  <div key={i}>
-                    <div className="flex justify-between">
-                      <label htmlFor={`${i}`} className="mb-0.5">
-                        {field.subName}
-                      </label>
-                      <div className="flex mt-0.5 ml-4 text-sm font-medium">
-                        <p className="mr-1">{field.credits}</p>
-                        <p>Credits</p>
+            <form onSubmit={handleSubmit}>
+              <div className="grid gap-4">
+                {data.fields.map((field, i) => {
+                  return (
+                    <div key={i}>
+                      <div className="flex justify-between">
+                        <label htmlFor={`${i}`} className="mb-0.5">
+                          {field.subName}
+                        </label>
+                        <div className="flex mt-0.5 ml-4 text-sm font-medium">
+                          <p className="mr-1">{field.credits}</p>
+                          <p>Credits</p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="w-full">
-                      <select
-                        name="grades"
-                        id={`${i}`}
-                        className="select form-control
+                      <div className="w-full">
+                        <select
+                          required={true}
+                          onInvalid={(e) =>
+                            e.target.setCustomValidity(
+                              'Please Select Your Grade'
+                            )
+                          }
+                          onInput={(e) => e.target.setCustomValidity('')}
+                          name="grades"
+                          id={`${i}`}
+                          className="select form-control
                         block
                         w-full
                         px-3
@@ -131,41 +140,60 @@ export default function RenderCalc({ data }) {
                         m-0
                         shadow-sm
                         focus:text-gray-700 focus:shadow-lg focus:ring-0 focus:outline-none;"
-                        onChange={(e) => {
-                          setState((state) =>
-                            state.map((f) => {
-                              if (f.subName === field.subName) {
-                                f.value = e.target.value;
-                              }
-                              return f;
-                            })
-                          );
-                        }}
-                      >
-                        <option value={-1}>--- Select Grade ---</option>
-                        {grades.map((g, i) => {
-                          return (
-                            <option key={i} value={g.value}>
-                              {g.grade}
-                            </option>
-                          );
-                        })}
-                      </select>
+                          onChange={(e) => {
+                            setState((state) =>
+                              state.map((f) => {
+                                if (f.subName === field.subName) {
+                                  f.value = e.target.value;
+                                }
+                                return f;
+                              })
+                            );
+                          }}
+                        >
+                          <option value="">--- Select Grade ---</option>
+                          {grades.map((g, i) => {
+                            return (
+                              <option key={i} value={g.value}>
+                                {g.grade}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            <button
-              className="text-white font-bold rounded-lg px-4 py-3 mt-5 shadow-lg"
-              style={{ background: data.color }}
-              onClick={() => {
-                setShowGPA(true);
-              }}
-            >
-              Calculate GPA
-            </button>
+                  );
+                })}
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  className="w-full text-white font-bold rounded-lg px-4 py-3 mt-5 shadow-lg hover:opacity-75"
+                  style={{ background: data.color }}
+                  type="submit"
+                >
+                  Calculate GPA
+                </button>
+                <button
+                  type="reset"
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  className="w-full text-white bg-red-500 font-bold rounded-lg px-4 py-3 mt-5 shadow-lg hover:opacity-75"
+                  onClick={() => {
+                    setState((state) =>
+                      state.map((f) => {
+                        return { ...f, value: '' };
+                      })
+                    );
+                  }}
+                >
+                  Clear Fields
+                </button>
+              </div>
+            </form>
           </div>
+          <Footer className="absolute sm:bottom-10 bottom-5" />
         </div>
       )}
     </>
