@@ -11,7 +11,7 @@ export default function LabelInput(props) {
         placeholder={props.placeholder}
         required
       />
-      <label for={props.id} className="text-gray-500 overflow-clip">
+      <label htmlFor={props.id} className="text-gray-500 overflow-clip">
         {props.labelText}
       </label>
     </div>

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-color: #bfdbfe;
+  --a-color: red;
+}
+
 .input-blue {
   @apply form-control
           block
@@ -28,4 +33,25 @@
 body {
   font-family: 'Poppins', sans-serif;
   @apply bg-slate-50;
+}
+
+.select:focus {
+  border-color: var(--a-color);
+}
+
+input[type='color'] {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 100px;
+  width: 32px;
+  height: 32px;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 100px;
+}
+input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: 100px;
 }

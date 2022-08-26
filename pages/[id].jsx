@@ -9,6 +9,10 @@ const grades = [
   { grade: 'B+', value: 7 },
   { grade: 'B', value: 6 },
   { grade: 'RA', value: 0 },
+  { grade: 'SA', value: 0 },
+  { grade: 'W', value: 0 },
+  { grade: 'AB', value: 0 },
+  { grade: 'AU', value: 0 },
 ];
 
 export default function RenderCalc({ data }) {
@@ -26,6 +30,10 @@ export default function RenderCalc({ data }) {
   };
   const [state, setState] = useState(getInitState());
   const [showGPA, setShowGPA] = useState(false);
+  useEffect(() => {
+    document.documentElement.style.setProperty('--a-color', data.color);
+    document.documentElement.style.setProperty('--bg-color', data.bgColor);
+  }, []);
 
   const calcgpa = () => {
     let gpa = 0;
@@ -58,11 +66,12 @@ export default function RenderCalc({ data }) {
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet"
         />
+        <title>{data.title}</title>
       </Head>
       {showGPA ? (
         <div className="h-screen flex flex-col justify-center items-center w-full">
@@ -78,7 +87,10 @@ export default function RenderCalc({ data }) {
           </button>
         </div>
       ) : (
-        <div className="min-h-screen flex justify-center items-center bg-slate-50 px-3 py-14">
+        <div
+          className="min-h-screen flex justify-center items-center px-3 py-14"
+          style={{ background: data.bgColor }}
+        >
           <div className="w-[30rem] rounded-lg p-5 shadow-lg bg-white">
             <h1 className="text-3xl font-bold">{data.title}</h1>
             <h2 className="text-base">
@@ -103,7 +115,7 @@ export default function RenderCalc({ data }) {
                       <select
                         name="grades"
                         id={`${i}`}
-                        className="form-control
+                        className="select form-control
                         block
                         w-full
                         px-3
@@ -118,7 +130,7 @@ export default function RenderCalc({ data }) {
                         ease-in-out
                         m-0
                         shadow-sm
-                        focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:shadow-lg focus:shadow-blue-500/20 focus:ring-0 focus:outline-none;"
+                        focus:text-gray-700 focus:shadow-lg focus:ring-0 focus:outline-none;"
                         onChange={(e) => {
                           setState((state) =>
                             state.map((f) => {
@@ -145,7 +157,8 @@ export default function RenderCalc({ data }) {
               })}
             </div>
             <button
-              className="text-white font-bold bg-green-500 rounded-lg px-4 py-3 mt-5"
+              className="text-white font-bold rounded-lg px-4 py-3 mt-5 shadow-lg"
+              style={{ background: data.color }}
               onClick={() => {
                 setShowGPA(true);
               }}

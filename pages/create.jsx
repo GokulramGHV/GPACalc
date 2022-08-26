@@ -10,15 +10,21 @@ import Head from 'next/head';
 import Footer from '../components/Footer';
 
 export default function CreateCalc() {
-  const [state, setState] = useState({ title: '', fields: [], createdBy: '' });
+  const [state, setState] = useState({
+    title: '',
+    fields: [],
+    createdBy: '',
+    color: '#3b82f6',
+    bgColor: '#bfdbfe',
+  });
   const [calcURL, setCalcURL] = useState('');
 
   const notify_success = (msg) => toast.success(msg);
   const notify_error = (msg) => toast.error(msg);
 
-  //   useEffect(() => {
-  //     console.log(state);
-  //   }, [state]);
+  // useEffect(() => {
+  //   console.log(state);
+  // }, [state]);
 
   const onChangeField = (val, subId, prop) => {
     setState((state) => {
@@ -53,7 +59,7 @@ export default function CreateCalc() {
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet"
@@ -97,7 +103,40 @@ export default function CreateCalc() {
               placeholder="Enter Creator's Name"
             />
 
-            {/* <TwitterPicker /> */}
+            <div className="flex mt-5 justify-evenly w-full flex-wrap">
+              <div>
+                <label htmlFor="color" className="relative bottom-2">
+                  Select Acent Color
+                </label>
+                <input
+                  id="color"
+                  type="color"
+                  className="ml-3"
+                  value={state.color}
+                  onChange={(e) => {
+                    setState((state) => {
+                      return { ...state, color: e.target.value };
+                    });
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="bgColor" className="relative bottom-2">
+                  Select Background Color
+                </label>
+                <input
+                  id="bgColor"
+                  type="color"
+                  className="ml-3"
+                  value={state.bgColor}
+                  onChange={(e) => {
+                    setState((state) => {
+                      return { ...state, bgColor: e.target.value };
+                    });
+                  }}
+                />
+              </div>
+            </div>
 
             <div className="my-5 w-full grid gap-3 bg-gray-100 rounded-lg p-3">
               <div>
@@ -148,6 +187,7 @@ export default function CreateCalc() {
                       placeholder="Credits"
                     />
                     <button
+                      type="button"
                       className="text-center bg-red-500 shadow-lg shadow-red-500/40 hover:shadow-red-500/60 hover:bg-red-600 px-5 rounded-lg text-white font-bold"
                       onClick={() => {
                         setState((state) => {
@@ -231,7 +271,7 @@ export default function CreateCalc() {
                     viewBox="0 0 16 16"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
                     />
                     <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
