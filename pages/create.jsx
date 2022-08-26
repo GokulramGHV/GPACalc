@@ -323,6 +323,8 @@ export default function CreateCalc() {
                       <a
                         href={`https://gpacalc.vercel.app/${calcURL}`}
                         className="hover:underline text-blue-500"
+                        target="_blank"
+                        rel="noreferrer"
                       >
                         {`https://gpacalc.vercel.app/${calcURL}`}
                       </a>
