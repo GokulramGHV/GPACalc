@@ -92,7 +92,7 @@ export default function RenderCalc({ data }) {
           className="min-h-screen flex flex-col justify-center items-center px-3 py-14"
           style={{ background: data.bgColor }}
         >
-          <div className="w-[30rem] rounded-lg p-5 shadow-lg bg-white">
+          <div className="sm:w-[30rem] rounded-lg p-5 shadow-lg bg-white">
             <h1 className="text-3xl font-bold">{data.title}</h1>
             <h2 className="text-base">
               <span className="font-medium">Template By:</span> {data.createdBy}
