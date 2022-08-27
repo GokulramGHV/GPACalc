@@ -89,7 +89,7 @@ export default function RenderCalc({ data }) {
         </div>
       ) : (
         <div
-          className="min-h-screen flex justify-center items-center px-3 py-14"
+          className="min-h-screen flex flex-col justify-center items-center px-3 py-14"
           style={{ background: data.bgColor }}
         >
           <div className="w-[30rem] rounded-lg p-5 shadow-lg bg-white">
@@ -193,7 +193,7 @@ export default function RenderCalc({ data }) {
               </div>
             </form>
           </div>
-          <Footer className="absolute sm:bottom-10 bottom-5" />
+          <Footer className="relative top-10" />
         </div>
       )}
     </>
