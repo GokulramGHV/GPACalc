@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import { getCalc } from '../utils/api';
@@ -31,6 +32,7 @@ export default function RenderCalc({ data }) {
   };
   const [state, setState] = useState(getInitState());
   const [showGPA, setShowGPA] = useState(false);
+  const [showMsg, setShowMsg] = useState(true);
   useEffect(() => {
     document.documentElement.style.setProperty('--a-color', data.color);
     document.documentElement.style.setProperty('--bg-color', data.bgColor);
@@ -193,6 +195,38 @@ export default function RenderCalc({ data }) {
               </div>
             </form>
           </div>
+          {showMsg && (
+            <div className="relative sm:w-[30rem] rounded-lg py-5 px-8 shadow-lg bg-white flex justify-center items-center mt-5">
+              <div className="text-center">
+                <Link href="/create">
+                  <span className="text-blue-500 underline underline-offset-1 cursor-pointer mr-0.5">
+                    Click Here
+                  </span>
+                </Link>{' '}
+                to create your own GPA Calculator!
+              </div>
+
+              <button
+                className="absolute top-2 right-2 text-gray-600"
+                onClick={() => {
+                  setShowMsg(false);
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
           <Footer className="relative top-10" />
         </div>
       )}

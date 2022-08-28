@@ -63,7 +63,7 @@ export default function CreateCalc() {
         <title>Create Calc</title>
       </Head>
       <Navbar fixed={false} />
-      <div className="pb-20 pt-10 px-2 min-h-fit flex flex-col justify-center items-center bg-slate-50">
+      <div className="pb-20 pt-10 px-4 min-h-fit flex flex-col justify-center items-center bg-slate-50">
         <ToastContainer />
 
         <form onSubmit={handleSubmit}>
@@ -103,7 +103,7 @@ export default function CreateCalc() {
             <div className="flex mt-5 justify-evenly w-full flex-wrap">
               <div>
                 <label htmlFor="color" className="relative bottom-2">
-                  Select Acent Color
+                  Select Accent Color
                 </label>
                 <input
                   id="color"
@@ -140,7 +140,7 @@ export default function CreateCalc() {
                 <div className="text-lg font-semibold text-gray-600 flex gap-2 justify-center">
                   <h2>Subject Fields</h2>
                   {state.fields.length !== 0 && (
-                    <span className="bg-yellow-400 text-white rounded-full px-2.5 text-sm flex justify-center items-center">
+                    <span className="bg-yellow-400 text-white rounded-full px-3 text-sm flex justify-center items-center">
                       {state.fields.length}
                     </span>
                   )}
@@ -154,7 +154,7 @@ export default function CreateCalc() {
 
               {state.fields.map((f, i) => {
                 return (
-                  <div key={i} className="flex gap-3">
+                  <div key={i} className="flex gap-2 sm:gap-3 flex-wrap">
                     {/* <div className="font-bold bg-indigo-500/90 shadow-md shadow-indigo-400/50 text-white rounded-md p-4">
                     {i + 1}
                   </div> */}
@@ -185,7 +185,7 @@ export default function CreateCalc() {
                     />
                     <button
                       type="button"
-                      className="text-center bg-red-500 shadow-lg shadow-red-500/40 hover:shadow-red-500/60 hover:bg-red-600 px-5 rounded-lg text-white font-bold"
+                      className="sm:w-fit w-full flex justify-center items-center py-4 bg-red-500 shadow-lg shadow-red-500/40 hover:shadow-red-500/60 hover:bg-red-600 px-5 rounded-lg text-white font-bold"
                       onClick={() => {
                         setState((state) => {
                           return {
@@ -199,13 +199,15 @@ export default function CreateCalc() {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
+                        viewBox="0 0 24 24"
                         fill="currentColor"
-                        className="bi bi-trash-fill"
-                        viewBox="0 0 16 16"
+                        className="w-6 h-6 sm:w-5 sm:h-5"
                       >
-                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                        <path
+                          fillRule="evenodd"
+                          d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -217,7 +219,7 @@ export default function CreateCalc() {
                 <div
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
-                  className=" flex justify-center cursor-pointer text-center bg-blue-500 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/70 p-4 rounded-lg text-white font-bold w-full hover:bg-blue-600"
+                  className=" flex justify-center items-center cursor-pointer text-center bg-blue-500 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/70 p-4 rounded-lg text-white font-bold w-full hover:bg-blue-600"
                   onClick={() => {
                     setState((state) => {
                       return {
@@ -239,7 +241,7 @@ export default function CreateCalc() {
                     fill="currentColor"
                     height={16}
                     width={16}
-                    className="bi bi-plus-square-fill mr-2 mt-[3px]"
+                    className="bi bi-plus-square-fill mr-2 mt-[3px] hidden sm:block"
                     viewBox="0 0 16 16"
                   >
                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
@@ -257,14 +259,14 @@ export default function CreateCalc() {
                   }}
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
-                  className="flex justify-center cursor-pointer text-center bg-red-500 shadow-lg shadow-red-500/30 hover:shadow-red-500/60 p-4 rounded-lg text-white font-bold w-full hover:bg-red-600"
+                  className="flex justify-center items-center cursor-pointer text-center bg-red-500 shadow-lg shadow-red-500/30 hover:shadow-red-500/60 p-4 rounded-lg text-white font-bold w-full hover:bg-red-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
                     height="20"
                     fill="currentColor"
-                    className="bi bi-arrow-clockwise mr-2 mt-[3px] font-bold"
+                    className="bi bi-arrow-clockwise mr-2 mt-[3px] font-bold hidden sm:block"
                     viewBox="0 0 16 16"
                   >
                     <path
