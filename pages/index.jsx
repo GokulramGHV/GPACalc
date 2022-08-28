@@ -13,10 +13,10 @@ export default function Home() {
       <Head>
         <title>GPA Calc: Caluculate your GPAs with ease</title>
       </Head>
-      <Navbar fixed={true} />
-      <div className="bg-slate-50 min-h-screen w-full">
-        <div className="flex flex-col gap-5 min-h-screen justify-center items-center">
-          <h1 className="text-5xl font-extrabold text-slate-800 text-center leading-[3.5rem] mx-10 mt-[5rem] sm:mt-0">
+      <Navbar />
+      <div className="bg-slate-50 w-full">
+        <div className="flex flex-col min-h-[75vh] gap-5 justify-center items-center">
+          <h1 className="text-5xl font-extrabold text-slate-800 text-center leading-[3.5rem] mx-10">
             Calculating GPAs just got easier!!
           </h1>
           <h3 className="text-xl font-medium text-center mx-10 mt-5">

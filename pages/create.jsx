@@ -62,10 +62,9 @@ export default function CreateCalc() {
       <Head>
         <title>Create Calc</title>
       </Head>
-      <Navbar fixed={false} />
-      <div className="pb-20 pt-10 px-4 min-h-fit flex flex-col justify-center items-center bg-slate-50">
+      <Navbar />
+      <div className="px-4 my-5 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center items-center bg-slate-50">
         <ToastContainer />
-
         <form onSubmit={handleSubmit}>
           <div className="bg-white shadow-lg sm:w-[35rem] p-5 rounded-lg">
             <h1 className="text-3xl font-bold text-gray-700">Calc Editor</h1>
@@ -360,7 +359,7 @@ export default function CreateCalc() {
             )}
           </div>
         </form>
-        <Footer className="relative top-12" />
+        <Footer className="relative top-12 mb-5" />
       </div>
     </>
   );
