@@ -47,18 +47,21 @@ export default function AllCalcs({ data }) {
             )}
             {data
               .filter((calc) => calc.title.toLowerCase().includes(state))
-              .map((calc) => {
+              .map((calc, i) => {
                 return (
-                  <div className="bg-white drop-shadow-md rounded-xl py-5 px-5">
+                  <div
+                    key={i}
+                    className="bg-white drop-shadow-md rounded-xl py-5 px-5"
+                  >
                     <div className="text-2xl font-bold">{calc.title}</div>
                     <div className="text-gray-600 mt-1">
                       Date Created: {calc.dateCreated.slice(0, 10)}
                     </div>
-                    <div className="text-gray-700 ">
+                    <div className="text-gray-700 my-1">
                       <span className="font-semibold">Created By: </span>{' '}
                       {calc.createdBy}
                     </div>
-                    <div className="text-md my-2">
+                    <div className="text-md mb-3 text-gray-700">
                       <span className="font-medium">No of fields:</span>{' '}
                       {calc.fields.length}
                     </div>

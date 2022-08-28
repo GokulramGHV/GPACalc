@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
       <Navbar />
       <div className="bg-slate-50 w-full">
-        <div className="flex flex-col min-h-[75vh] gap-5 justify-center items-center">
+        <div className="flex flex-col min-h-[75vh] sm:min-h-[85vh] gap-5 justify-center items-center ">
           <h1 className="text-5xl font-extrabold text-slate-800 text-center leading-[3.5rem] mx-10">
             Calculating GPAs just got easier!!
           </h1>
@@ -73,7 +73,7 @@ export default function Home() {
               </svg>
             </div>
           </div>
-          <Footer className="absolute sm:bottom-10 bottom-5 mx-3" />
+          <Footer className="relative sm:top-20 top-10 bottom-5 mx-3" />
         </div>
       </div>
     </>
