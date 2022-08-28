@@ -2,15 +2,27 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import ShowCalcs from '../components/ShowCalcs';
 import { getCalcs } from '../utils/api';
+
 export default function AllCalcs({ data }) {
   const [state, setState] = useState('');
   return (
     <>
       <Navbar />
       <div className="min-h-[90vh] flex justify-center w-full">
-        <div className="max-w-7xl mx-10 flex flex-col justify-center">
-          <h1 className="text-3xl text-center font-extrabold my-5">
+        <div className="max-w-7xl mx-5 flex flex-col justify-center">
+          {data.filter((calc) => calc.pinned).length > 0 && (
+            <>
+              <h2 className="text-3xl text-center font-extrabold my-7">
+                Featured Calculators
+              </h2>
+              <div className="flex justify-center flex-wrap gap-5">
+                <ShowCalcs data={data.filter((calc) => calc.pinned)} />
+              </div>
+            </>
+          )}
+          <h1 className="text-3xl text-center font-extrabold mt-10 mb-5">
             All Calculators
           </h1>
           <input
@@ -40,43 +52,12 @@ export default function AllCalcs({ data }) {
                         mx-auto
                         focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:shadow-lg focus:shadow-blue-500/20 focus:ring-0 focus:outline-none;"
           />
-          <div className="my-10 flex flex-wrap justify-center gap-5">
+          <div className="my-10 flex flex-wrap justify-center gap-5 w-full">
             {data.filter((calc) => calc.title.toLowerCase().includes(state))
               .length === 0 && (
               <h2 className="text-lg font-semibold">No Calculators Found!</h2>
             )}
-            {data
-              .filter((calc) => calc.title.toLowerCase().includes(state))
-              .map((calc, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="bg-white drop-shadow-md rounded-xl py-5 px-5"
-                  >
-                    <div className="text-2xl font-bold">{calc.title}</div>
-                    <div className="text-gray-600 mt-1">
-                      Date Created: {calc.dateCreated.slice(0, 10)}
-                    </div>
-                    <div className="text-gray-700 my-1">
-                      <span className="font-semibold">Created By: </span>{' '}
-                      {calc.createdBy}
-                    </div>
-                    <div className="text-md mb-3 text-gray-700">
-                      <span className="font-medium">No of fields:</span>{' '}
-                      {calc.fields.length}
-                    </div>
-                    <Link href={`https://gpacalc.vercel.app/${calc._id}/`}>
-                      <div
-                        data-mdb-ripple="true"
-                        data-mdb-ripple-color="light"
-                        className=" flex justify-center items-center cursor-pointer text-center bg-blue-500 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/60 p-3 rounded-lg text-white font-bold w-full hover:bg-blue-600"
-                      >
-                        Open Calc
-                      </div>
-                    </Link>
-                  </div>
-                );
-              })}
+            <ShowCalcs data={data} />
           </div>
           <Footer className="mb-5 w-fit mx-auto" />
         </div>

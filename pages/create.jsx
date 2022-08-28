@@ -15,6 +15,7 @@ export default function CreateCalc() {
     createdBy: '',
     color: '#3b82f6',
     bgColor: '#bfdbfe',
+    pinned: false,
   });
   const [calcURL, setCalcURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,7 @@ export default function CreateCalc() {
         <title>Create Calc</title>
       </Head>
       <Navbar />
-      <div className="px-4 my-5 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center items-center bg-slate-50">
+      <div className="px-4 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center items-center bg-slate-50">
         <ToastContainer />
         <form onSubmit={handleSubmit}>
           <div className="bg-white shadow-lg sm:w-[35rem] p-5 rounded-lg">
@@ -327,7 +328,7 @@ export default function CreateCalc() {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        {`https://gpacalc.vercel.app/${calcURL}`}
+                        {`gpacalc.vercel.app/${calcURL}`}
                       </a>
                     </div>
                   </div>
