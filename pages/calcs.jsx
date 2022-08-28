@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { getCalcs } from '../utils/api';
 export default function AllCalcs({ data }) {
@@ -8,7 +9,7 @@ export default function AllCalcs({ data }) {
     <>
       <Navbar />
       <div className="min-h-[90vh] flex justify-center w-full">
-        <div className="max-w-7xl mx-10">
+        <div className="max-w-7xl mx-10 flex flex-col justify-center">
           <h1 className="text-3xl text-center font-extrabold my-5">
             All Calculators
           </h1>
@@ -74,6 +75,7 @@ export default function AllCalcs({ data }) {
                 );
               })}
           </div>
+          <Footer className="mb-5 w-fit mx-auto" />
         </div>
       </div>
     </>

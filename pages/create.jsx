@@ -359,7 +359,7 @@ export default function CreateCalc() {
             )}
           </div>
         </form>
-        <Footer className="relative top-12 mb-5" />
+        <Footer className="relative mt-5 sm:mt-0 sm:top-12 sm:mb-5 mx-3" />
       </div>
     </>
   );

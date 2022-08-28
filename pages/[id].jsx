@@ -227,7 +227,7 @@ export default function RenderCalc({ data }) {
               </button>
             </div>
           )}
-          <Footer className="relative top-10" />
+          <Footer className="relative top-10 mx-3" />
         </div>
       )}
     </>

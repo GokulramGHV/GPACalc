@@ -73,7 +73,7 @@ export default function Home() {
               </svg>
             </div>
           </div>
-          <Footer className="absolute sm:bottom-10 bottom-5" />
+          <Footer className="absolute sm:bottom-10 bottom-5 mx-3" />
         </div>
       </div>
     </>

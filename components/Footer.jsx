@@ -1,7 +1,7 @@
 export default function Footer({ className }) {
   return (
     <div
-      className={`px-5 py-3 bg-white shadow-md flex flex-wrap justify-center mx-3 gap-1 rounded-full ${className}`}
+      className={`px-5 py-3 bg-white shadow-md flex flex-wrap justify-center gap-1 rounded-full ${className}`}
     >
       Developed with ❤️ by{' '}
       <a
