@@ -1,4 +1,5 @@
-const API_BASE_URL = 'https://gpacalc-backend.gokulramghv.repl.co/calcs';
+// const API_BASE_URL = 'https://gpacalc-backend.gokulramghv.repl.co/calcs';
+const API_BASE_URL = 'https://gpacalc-backend.cyclic.app/calcs';
 
 export const request = async (endpoint, method = 'GET', data = {}) => {
   let url;
