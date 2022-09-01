@@ -57,7 +57,7 @@ export default function AllCalcs({ data }) {
               .length === 0 && (
               <h2 className="text-lg font-semibold">No Calculators Found!</h2>
             )}
-            <ShowCalcs data={data} />
+            <ShowCalcs data={data.filter((calc) => calc.title.toLowerCase().includes(state))} />
           </div>
           <Footer className="mb-5 w-fit mx-auto" />
         </div>
