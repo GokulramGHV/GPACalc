@@ -53,11 +53,11 @@ export default function AllCalcs({ data }) {
                         focus:text-gray-700 focus:bg-white focus:border-blue-500 focus:shadow-lg focus:shadow-blue-500/20 focus:ring-0 focus:outline-none;"
           />
           <div className="my-10 flex flex-wrap justify-center gap-5 w-full">
-            {data.filter((calc) => calc.title.toLowerCase().includes(state))
+            {data.filter((calc) => calc.title.toLowerCase().includes(state.toLowerCase()))
               .length === 0 && (
               <h2 className="text-lg font-semibold">No Calculators Found!</h2>
             )}
-            <ShowCalcs data={data.filter((calc) => calc.title.toLowerCase().includes(state))} />
+            <ShowCalcs data={data.filter((calc) => calc.title.toLowerCase().includes(state.toLowerCase()))} />
           </div>
           <Footer className="mb-5 w-fit mx-auto" />
         </div>
