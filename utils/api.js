@@ -1,6 +1,6 @@
 // const API_BASE_URL = 'https://gpacalc-backend.gokulramghv.repl.co/calcs';
-// const API_BASE_URL = 'https://gpacalc-backend.cyclic.app/calcs';
-const API_BASE_URL = 'http://localhost:4000/calcs';
+const API_BASE_URL = 'https://gpacalc-backend.cyclic.app/calcs';
+// const API_BASE_URL = 'http://localhost:4000/calcs';
 
 export const request = async (endpoint, method = 'GET', data = {}) => {
   let url;
