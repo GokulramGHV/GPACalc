@@ -16,15 +16,19 @@ export default function CreateCalc() {
     color: '#3b82f6',
     bgColor: '#bfdbfe',
     pinned: false,
+    cgpaCalc: false,
   });
   const [calcURL, setCalcURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const notify_success = (msg) => toast.success(msg);
   const notify_error = (msg) => toast.error(msg);
+  const [showModal, setShowModal] = useState(false);
 
-  // useEffect(() => {
-  //   console.log(state);
-  // }, [state]);
+  useEffect(() => {
+    if (calcURL !== '') {
+      document.querySelector('body').style.overflowY = 'hidden';
+    }
+  }, [calcURL]);
 
   const onChangeField = (val, subId, prop) => {
     setState((state) => {
@@ -46,8 +50,9 @@ export default function CreateCalc() {
       return;
     }
     try {
-      const data = await createCalc(state);
-      setCalcURL(`${data._id}`);
+      // const data = await createCalc(state);
+      setCalcURL(`lakdsjflsdkajf`);
+      setShowModal(true);
       notify_success(
         "Calculator Created Successfully! You can now copy the Calc's link down below!"
       );
@@ -100,6 +105,38 @@ export default function CreateCalc() {
               placeholder="Enter Creator's Name"
             />
 
+            <div className="flex gap-10 mt-5 justify-center">
+              <div>
+                <label htmlFor="GPACalc">GPA Calc</label>
+                <input
+                  type="radio"
+                  name="calcType"
+                  id="GPACalc"
+                  className="ml-3"
+                  checked={!state.cgpaCalc}
+                  onChange={(e) => {
+                    setState((state) => {
+                      return { ...state, cgpaCalc: false };
+                    });
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="CGPACalc">CGPA Calc</label>
+                <input
+                  type="radio"
+                  name="calcType"
+                  id="CGPACalc"
+                  className="ml-3"
+                  checked={state.cgpaCalc}
+                  onChange={(e) => {
+                    setState((state) => {
+                      return { ...state, cgpaCalc: true };
+                    });
+                  }}
+                />
+              </div>
+            </div>
             <div className="flex mt-5 justify-evenly w-full flex-wrap">
               <div>
                 <label htmlFor="color" className="relative bottom-2">
@@ -278,44 +315,79 @@ export default function CreateCalc() {
                   Reset Fields
                 </div>
               </div>
-
-              <button
-                data-mdb-ripple="true"
-                data-mdb-ripple-color="light"
-                type="submit"
-                className="bg-indigo-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/60 p-4 rounded-lg text-white font-bold w-full mt-3 hover:bg-indigo-600"
-              >
-                <div className="flex justify-center">
-                  {' '}
-                  {isLoading ? (
-                    <div className="flex justify-center items-center">
-                      <div
-                        className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
+              {calcURL === '' ? (
+                <button
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  type="submit"
+                  className="bg-indigo-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/60 p-4 rounded-lg text-white font-bold w-full mt-3 hover:bg-indigo-600"
+                >
+                  <div className="flex justify-center">
+                    {' '}
+                    {isLoading ? (
+                      <div className="flex justify-center items-center">
+                        <div
+                          className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        className="bi bi-calculator-fill mt-[3px] mr-1.5"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z" />
-                      </svg>
-                      Create Calc
-                    </>
-                  )}
-                </div>
-              </button>
+                    ) : (
+                      <>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          className="bi bi-calculator-fill mt-[3px] mr-1.5"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z" />
+                        </svg>
+                        Create Calc
+                      </>
+                    )}
+                  </div>
+                </button>
+              ) : (
+                <button
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  type="button"
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                  className="bg-indigo-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/60 p-4 rounded-lg text-white font-bold w-full mt-3 hover:bg-indigo-600"
+                >
+                  <div className="flex justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-calculator-fill mt-[3px] mr-1.5"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z" />
+                    </svg>
+                    Show Calc URL
+                  </div>
+                </button>
+              )}
             </div>
-            {calcURL !== '' && (
-              <div className="bg-gray-100 p-3 rounded-lg mt-4 font-mono shadow-sm">
+          </div>
+        </form>
+        {showModal && (
+          <div
+            className="absolute top-0 left-0 min-h-screen w-full flex justify-center items-center backdrop-blur-[5px] bg-black bg-opacity-[0.6]"
+            onClick={(e) => {
+              if (e.currentTarget !== e.target) return;
+              setShowModal(false);
+            }}
+          >
+            <div className="bg-white p-4 rounded-lg shadow-lg mx-5">
+              <div className="bg-gray-100 p-3 rounded-lg font-mono shadow-sm">
                 <div className="flex justify-between">
                   <div>
                     <h3 className="font-mono font-semibold">
@@ -338,6 +410,7 @@ export default function CreateCalc() {
                     onClick={() => {
                       copy(`https://gpacalc.vercel.app/${calcURL}`);
                       toast.info('Link copied to clipboard!');
+                      setShowModal(false);
                     }}
                   >
                     <svg
@@ -357,10 +430,10 @@ export default function CreateCalc() {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        </form>
-        <Footer className="relative mt-5 sm:mt-0 sm:top-12 sm:mb-5 mx-3" />
+        )}
+        <Footer className="mt-10 mb-4 mx-3" />
       </div>
     </>
   );

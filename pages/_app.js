@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Loading from '../components/Loading';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
@@ -8,7 +9,12 @@ function MyApp({ Component, pageProps }) {
     };
     use();
   }, []);
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Loading />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp;

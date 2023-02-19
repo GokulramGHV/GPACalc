@@ -8,21 +8,23 @@ export default function ShowCalcs({ data }) {
         return (
           <div
             key={i}
-            className="bg-white drop-shadow-md rounded-xl py-5 px-5 w-full sm:w-fit"
+            className="bg-white drop-shadow-md rounded-xl py-5 px-5 w-full sm:w-96 flex flex-col"
           >
-            <div className="text-2xl font-bold">{calc.title}</div>
-            <div className="text-gray-600 mt-1">
-              Date Created: {calc.dateCreated.slice(0, 10)}
+            <div className="flex-1">
+              <div className="text-2xl font-bold">{calc.title}</div>
+              <div className="text-gray-600 mt-1">
+                Date Created: {calc.dateCreated.slice(0, 10)}
+              </div>
+              <div className="text-gray-700 my-1">
+                <span className="font-semibold">Created By: </span>{' '}
+                {calc.createdBy}
+              </div>
+              <div className="text-md mb-3 text-gray-700">
+                <span className="font-medium">No of fields:</span>{' '}
+                {calc.fields.length}
+              </div>
             </div>
-            <div className="text-gray-700 my-1">
-              <span className="font-semibold">Created By: </span>{' '}
-              {calc.createdBy}
-            </div>
-            <div className="text-md mb-3 text-gray-700">
-              <span className="font-medium">No of fields:</span>{' '}
-              {calc.fields.length}
-            </div>
-            <Link href={`https://gpacalc.vercel.app/${calc._id}/`}>
+            <Link href={`/${calc._id}/`}>
               <div
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"

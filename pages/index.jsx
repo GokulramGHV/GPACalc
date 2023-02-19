@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Footer from '../components/Footer';
+import Loading from '../components/Loading';
 
 export default function Home() {
   const [state, setState] = useState('');
@@ -11,7 +12,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>GPA Calc: Caluculate your GPAs with ease</title>
+        <title>GPA Calc: Calculate your GPAs with ease!</title>
+        <meta name="title" content="GPA Calc: Calculate your GPAs with ease!" />
       </Head>
       <Navbar />
       <div className="bg-slate-50 w-full">

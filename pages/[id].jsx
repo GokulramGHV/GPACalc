@@ -2,7 +2,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
-import { getCalc } from '../utils/api';
+import ShowStats from '../components/ShowStats';
+import { getCalc, saveResponse } from '../utils/api';
 
 const grades = [
   { grade: 'O', value: 10 },
@@ -33,21 +34,26 @@ export default function RenderCalc({ data }) {
   const [state, setState] = useState(getInitState());
   const [showGPA, setShowGPA] = useState(false);
   const [showMsg, setShowMsg] = useState(true);
+  const [calculatedGPA, setCalculatedGPA] = useState(0);
+  const [calcOnce, setCalcOnce] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+
   useEffect(() => {
     document.documentElement.style.setProperty('--a-color', data.color);
     document.documentElement.style.setProperty('--bg-color', data.bgColor);
   }, [data.color, data.bgColor]);
 
   const calcgpa = () => {
+    console.log('Calculating GPA');
     let gpa = 0;
     let totalCreds = 0;
     state.forEach((f) => {
       totalCreds += f?.credits;
       gpa += f?.credits * f?.value;
     });
-    return (
-      <div>{Math.round((gpa / totalCreds + Number.EPSILON) * 100) / 100}</div>
-    );
+    let final_gpa = Math.round((gpa / totalCreds + Number.EPSILON) * 100) / 100;
+    setCalculatedGPA(final_gpa);
+    return final_gpa;
   };
 
   useEffect(() => {
@@ -56,7 +62,12 @@ export default function RenderCalc({ data }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let gpa = calcgpa();
     setShowGPA(true);
+    if (!calcOnce) {
+      await saveResponse(data._id, { value: gpa });
+    }
+    setCalcOnce(true);
   };
 
   if (data === 'Error') {
@@ -74,11 +85,19 @@ export default function RenderCalc({ data }) {
     <>
       <Head>
         <title>{data.title}</title>
+        <meta name="title" content={data.title} />
       </Head>
-      {showGPA ? (
+      {showStats ? (
+        <ShowStats
+          responses={data.responses}
+          setShowStats={setShowStats}
+          color={data.color}
+          cgpaCalc={data.cgpaCalc}
+        />
+      ) : showGPA ? (
         <div className="h-screen flex flex-col justify-center items-center w-full">
           <h2 className="text-3xl font-medium">Your GPA is</h2>{' '}
-          <h1 className="text-[7rem] font-bold">{calcgpa()}</h1>
+          <h1 className="text-[7rem] font-bold">{calculatedGPA}</h1>
           <button
             className="text-white font-bold  shadow-lg rounded-lg px-6 py-3 mt-5 hover:opacity-75"
             style={{ background: data.color }}
@@ -114,19 +133,16 @@ export default function RenderCalc({ data }) {
                           <p>Credits</p>
                         </div>
                       </div>
-
-                      <div className="w-full">
-                        <select
-                          required={true}
-                          onInvalid={(e) =>
-                            e.target.setCustomValidity(
-                              'Please Select Your Grade'
-                            )
-                          }
-                          onInput={(e) => e.target.setCustomValidity('')}
-                          name="grades"
-                          id={`${i}`}
-                          className="select form-control
+                      {data.cgpaCalc ? (
+                        <div className="w-full">
+                          <input
+                            value={state[i]?.value}
+                            type="number"
+                            required
+                            name="grades"
+                            placeholder={`Enter ${field.subName} GPA`}
+                            id={`${i}`}
+                            className="select form-control
                         block
                         w-full
                         px-3
@@ -142,46 +158,89 @@ export default function RenderCalc({ data }) {
                         m-0
                         shadow-sm
                         focus:text-gray-700 focus:shadow-lg focus:ring-0 focus:outline-none;"
-                          onChange={(e) => {
-                            setState((state) =>
-                              state.map((f) => {
-                                if (f.subName === field.subName) {
-                                  f.value = e.target.value;
-                                }
-                                return f;
-                              })
-                            );
-                          }}
-                        >
-                          <option value="">--- Select Grade ---</option>
-                          {grades.map((g, i) => {
-                            return (
-                              <option key={i} value={g.value}>
-                                {g.grade}
-                              </option>
-                            );
-                          })}
-                        </select>
-                      </div>
+                            onChange={(e) => {
+                              setState((state) =>
+                                state.map((f) => {
+                                  if (f.subName === field.subName) {
+                                    f.value = e.target.value;
+                                  }
+                                  return f;
+                                })
+                              );
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-full">
+                          <select
+                            required={true}
+                            onInvalid={(e) =>
+                              e.target.setCustomValidity(
+                                'Please Select Your Grade'
+                              )
+                            }
+                            onInput={(e) => e.target.setCustomValidity('')}
+                            name="grades"
+                            id={`${i}`}
+                            className="select form-control
+                        block
+                        w-full
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding
+                        border-2 border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        shadow-sm
+                        focus:text-gray-700 focus:shadow-lg focus:ring-0 focus:outline-none;"
+                            onChange={(e) => {
+                              setState((state) =>
+                                state.map((f) => {
+                                  if (f.subName === field.subName) {
+                                    f.value = e.target.value;
+                                  }
+                                  return f;
+                                })
+                              );
+                            }}
+                          >
+                            <option value="">--- Select Grade ---</option>
+                            {grades.map((g, i) => {
+                              return (
+                                <option key={i} value={g.value}>
+                                  {g.grade}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 mt-5">
                 <button
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
-                  className="w-full text-white font-bold rounded-lg px-4 py-3 mt-5 shadow-lg hover:opacity-75"
+                  className={`w-full text-white font-bold rounded-lg px-4 py-3 shadow-lg hover:opacity-75 ${
+                    data?.responses?.length > 0 && 'col-span-2'
+                  }`}
                   style={{ background: data.color }}
                   type="submit"
                 >
-                  Calculate GPA
+                  {data.cgpaCalc ? 'Calculate CGPA' : 'Calculate GPA'}
                 </button>
                 <button
                   type="reset"
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
-                  className="w-full text-white bg-red-500 font-bold rounded-lg px-4 py-3 mt-5 shadow-lg hover:opacity-75"
+                  className="w-full text-white bg-red-500 font-bold rounded-lg px-4 py-3 shadow-lg hover:opacity-75"
                   onClick={() => {
                     setState((state) =>
                       state.map((f) => {
@@ -192,6 +251,19 @@ export default function RenderCalc({ data }) {
                 >
                   Clear Fields
                 </button>
+                {data?.responses?.length > 0 && (
+                  <button
+                    type="reset"
+                    data-mdb-ripple="true"
+                    data-mdb-ripple-color="light"
+                    className="w-full text-white bg-blue-500 font-bold rounded-lg px-4 py-3 shadow-lg hover:opacity-75"
+                    onClick={() => {
+                      setShowStats(true);
+                    }}
+                  >
+                    Show Stats
+                  </button>
+                )}
               </div>
             </form>
           </div>
