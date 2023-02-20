@@ -22,32 +22,20 @@ class MyDocument extends Document {
 
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://gpacalc.vercel.app/" />
-          <meta
-            property="og:title"
-            content="GPA Calc: Calculate your GPAs with ease!"
-          />
+
           <meta
             property="og:description"
             content="Create your own calculator and share the link with friends. Say goodbye to manual calculations and hello to stress-free GPA calculating!"
           />
-          <meta
-            property="og:image"
-            content="https://cdn.discordapp.com/attachments/989046905310961677/1076841106391715841/Screenshot_2023-02-19_153401.png"
-          />
+         
           <meta property="twitter:card" content="summary_large_image" />
           <meta property="twitter:url" content="https://gpacalc.vercel.app/" />
-          <meta
-            property="twitter:title"
-            content="GPA Calc: Calculate your GPAs with ease!"
-          />
+
           <meta
             property="twitter:description"
             content="Create your own calculator and share the link with friends. Say goodbye to manual calculations and hello to stress-free GPA calculating!"
           />
-          <meta
-            property="twitter:image"
-            content="https://cdn.discordapp.com/attachments/989046905310961677/1076841106391715841/Screenshot_2023-02-19_153401.png"
-          />
+          
         </Head>
         <body>
           <Main />

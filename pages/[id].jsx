@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
+import PageTitle from '../components/PageTitle';
 import ShowStats from '../components/ShowStats';
 import { getCalc, saveResponse } from '../utils/api';
 
@@ -83,10 +84,7 @@ export default function RenderCalc({ data }) {
 
   return (
     <>
-      <Head>
-        <title>{data.title}</title>
-        <meta name="title" content={data.title} />
-      </Head>
+      <PageTitle title={data.title} image={data._id} />
       {showStats ? (
         <ShowStats
           responses={data.responses}

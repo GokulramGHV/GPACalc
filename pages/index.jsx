@@ -5,16 +5,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Footer from '../components/Footer';
 import Loading from '../components/Loading';
+import PageTitle from '../components/PageTitle';
 
 export default function Home() {
   const [state, setState] = useState('');
   const router = useRouter();
   return (
     <>
-      <Head>
-        <title>GPA Calc: Calculate your GPAs with ease!</title>
-        <meta name="title" content="GPA Calc: Calculate your GPAs with ease!" />
-      </Head>
+      <PageTitle title="GPA Calc: Calculate GPAs with ease!" />
       <Navbar />
       <div className="bg-slate-50 w-full">
         <div className="flex flex-col min-h-[75vh] sm:min-h-[85vh] gap-5 justify-center items-center ">
@@ -22,7 +20,7 @@ export default function Home() {
             Calculating GPAs just got easier!!
           </h1>
           <h3 className="text-xl font-medium text-center mx-10 mt-5">
-            Enter a calculator ID or the link in the textbox below{' '}
+            Enter a calculator ID or the link in the textbox below
           </h3>
           <div className="w-full px-5 grid justify-center gap-5">
             <input

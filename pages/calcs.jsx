@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import PageTitle from '../components/PageTitle';
 import ShowCalcs from '../components/ShowCalcs';
 import { getCalcs } from '../utils/api';
 
@@ -9,6 +10,7 @@ export default function AllCalcs({ data }) {
   const [state, setState] = useState('');
   return (
     <>
+      <PageTitle title="All Calcs" />
       <Navbar />
       <div className="min-h-[90vh] flex justify-center w-full">
         <div className="max-w-7xl mx-5 flex flex-col justify-center">

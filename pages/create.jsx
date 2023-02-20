@@ -24,12 +24,6 @@ export default function CreateCalc() {
   const notify_error = (msg) => toast.error(msg);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    if (calcURL !== '') {
-      document.querySelector('body').style.overflowY = 'hidden';
-    }
-  }, [calcURL]);
-
   const onChangeField = (val, subId, prop) => {
     setState((state) => {
       return {
@@ -50,8 +44,8 @@ export default function CreateCalc() {
       return;
     }
     try {
-      // const data = await createCalc(state);
-      setCalcURL(`lakdsjflsdkajf`);
+      const data = await createCalc(state);
+      setCalcURL(`${data._id}`);
       setShowModal(true);
       notify_success(
         "Calculator Created Successfully! You can now copy the Calc's link down below!"
@@ -380,7 +374,7 @@ export default function CreateCalc() {
         </form>
         {showModal && (
           <div
-            className="absolute top-0 left-0 min-h-screen w-full flex justify-center items-center backdrop-blur-[5px] bg-black bg-opacity-[0.6]"
+            className="fixed top-0 left-0 h-screen w-full flex justify-center items-center backdrop-blur-[5px] bg-black bg-opacity-[0.6]"
             onClick={(e) => {
               if (e.currentTarget !== e.target) return;
               setShowModal(false);

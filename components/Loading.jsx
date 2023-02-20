@@ -23,7 +23,7 @@ export default function Loading() {
   return (
     <>
       {loading && (
-        <div className="z-50 absolute top-0 left-0 min-h-screen w-full flex justify-center items-center backdrop-blur-[5px] bg-black bg-opacity-[0.6]">
+        <div className="z-50 fixed top-0 left-0 min-h-screen w-full flex justify-center items-center backdrop-blur-[5px] bg-black bg-opacity-[0.6]">
           <div className="flex justify-center items-center p-5 bg-white rounded-lg shadow-lg">
             <div
               className="spinner-border animate-spin inline-block w-10 h-10 border-[5px] rounded-full text-blue-500"
