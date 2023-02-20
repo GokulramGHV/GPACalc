@@ -63,7 +63,7 @@ export default function CreateCalc() {
         <title>Create Calc</title>
       </Head>
       <Navbar />
-      <div className="px-4 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center items-center bg-slate-50">
+      <div className="px-4 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center items-center bg-slate-50 mt-10 lg:mt-0">
         <ToastContainer />
         <form onSubmit={handleSubmit}>
           <div className="bg-white shadow-lg sm:w-[35rem] p-5 rounded-lg">

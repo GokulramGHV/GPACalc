@@ -52,7 +52,10 @@ export default function Home() {
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
               onClick={() => {
-                router.push(`/${state}`);
+                if (state === '') return;
+                if (state.includes('https://') && state.includes('gpacalc'))
+                  router.push(state);
+                else router.push(`/${state}`);
               }}
               className="mx-auto flex justify-center cursor-pointer text-center bg-blue-500 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/70 p-4 rounded-lg text-white font-bold w-full sm:w-[15rem] hover:bg-blue-600"
             >
