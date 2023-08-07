@@ -65,11 +65,11 @@ export default function RenderCalc({ data }) {
     event.preventDefault();
     let gpa = calcgpa();
     setShowGPA(true);
-    if (!localStorage.getItem("once")) {
+    if (!localStorage.getItem(data._id)) {
       await saveResponse(data._id, { value: gpa });
     }
     setCalcOnce(true);
-    localStorage.setItem("once", "true");
+    localStorage.setItem(data._id, "true");
   };
 
   if (data === 'Error') {
